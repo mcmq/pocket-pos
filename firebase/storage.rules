@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// PocketPOS Cloud Storage rules. See docs/offline-sync.md → Images.
+// Product images and the shop logo live at shops/{shopId}/images/{rowId}.jpg.
+// Access mirrors firebase/firestore.rules: the shop owner or an active member.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function shopDoc(shopId) {
+      return /databases/(default)/documents/shops/$(shopId);
+    }
+
+    function canAccess(shopId) {
+      let member = /databases/(default)/documents/shops/$(shopId)/members/$(request.auth.uid);
+      return request.auth != null
+        && ((firestore.exists(shopDoc(shopId))
+              && firestore.get(shopDoc(shopId)).data.ownerUid == request.auth.uid)
+          || (firestore.exists(member) && firestore.get(member).data.active == true));
+    }
+
+    match /shops/{shopId}/images/{fileName} {
+      allow read: if canAccess(shopId);
+      // The app uploads downscaled JPEGs (~1024 px); 5 MB is a generous cap.
+      allow create, update: if canAccess(shopId)
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

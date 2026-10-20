@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "appTitle": "PocketPOS",
+  "navSell": "Home",
+  "navInventory": "Inventory",
+  "navTransactions": "Transactions",
+  "navReports": "Reports",
+  "navSettings": "Settings",
+  "actionCancel": "Cancel",
+  "actionSave": "Save",
+  "actionNext": "Next",
+  "searchProducts": "Search products by name, SKU or barcode…",
+  "searchTransactions": "Search by number, customer or note…",
+  "cartItemCount": "{count, plural, =1{1 Item} other{{count} Items}}",
+  "@cartItemCount": {
+    "placeholders": { "count": { "type": "int" } }
+  }
+}
