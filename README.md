@@ -5,8 +5,6 @@ Built with Flutter, SQLite and Firebase.
 
 PocketPOS turns a phone or tablet into a full point-of-sale terminal. You can ring up sales, scan barcodes, send digital receipts and keep stock accurate. It keeps working when the internet drops and syncs everything automatically once you're back online.
 
-![PocketPOS design](docs/image.png)
-
 ---
 
 ## 📱 Screenshots
